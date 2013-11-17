@@ -1,0 +1,11 @@
+<div class='upload'>
+	<h3><%= @upload.sender.name.humanize %> has shared these files with you:</h3>
+	<ul class='files'>
+		<% @upload.documents.each do |document| %>
+			<li>
+				<%= link_to document.attachment_file_name, document.attachment.url %> |
+				<%= number_to_human_size(document.attachment_file_size) %>
+			</li>
+		<% end %>
+	</ul>
+</div>

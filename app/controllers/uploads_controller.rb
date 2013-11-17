@@ -12,8 +12,13 @@ class UploadsController < ApplicationController
 			flash[:notice] = 'File uploaded successfully'
 			redirect_to new_upload_path
 		else
+			flash[:alert] = 'Something went wrong'
 			render :new
 		end
+	end
+
+	def show
+		@upload = Upload.find(params[:id])
 	end
 
 private
@@ -21,6 +26,6 @@ private
 	def upload_params
 		params.require(:upload).permit(sender_attributes: [:name, :email],
 																	 recipients_attributes: [:email],
-																	 documents_attributes: [:file])
+																	 documents_attributes: [:attachment])
 	end
 end

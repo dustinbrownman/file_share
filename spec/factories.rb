@@ -2,7 +2,13 @@ require 'spec_helper'
 
 FactoryGirl.define do
   factory :upload do
-  	
+  	factory :complete_upload do
+      before(:create) do |upload|
+        upload.sender = FactoryGirl.create(:sender)
+        upload.recipients << FactoryGirl.create(:recipient)
+        upload.documents << FactoryGirl.create(:document)
+      end
+    end
   end
 
   factory :sender do
@@ -15,6 +21,6 @@ FactoryGirl.define do
   end
 
   factory :document do
-  	file { File.new('spec/test_doc.txt') }
+  	attachment { File.new('spec/test_doc.txt') }
   end
 end

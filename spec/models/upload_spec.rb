@@ -26,7 +26,7 @@ describe Upload do
 		it 'should require at least one document' do
 			upload = FactoryGirl.build(:upload, id: 1)
 			upload.sender = FactoryGirl.create(:sender)
-			upload.recipients << FactoryGirl.create(:recipient)
+			upload.documents << FactoryGirl.create(:document)
 			upload.should_not be_valid
 		end
 	end

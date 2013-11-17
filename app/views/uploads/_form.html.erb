@@ -1,4 +1,5 @@
 <%= form_for @upload do |f| %>
+	<%= render 'errors' %>
 	<%= f.fields_for :sender do |ff| %>
 		<div>
 			<%= ff.label :name, 'Your name' %>
@@ -19,8 +20,8 @@
 
 	<%= f.fields_for :documents do |ff| %>
 		<div>
-			<%= ff.label :file %>
-			<%= ff.file_field :file %>
+			<%= ff.label :attachment %>
+			<%= ff.file_field :attachment %>
 		</div>
 	<% end %>
 
