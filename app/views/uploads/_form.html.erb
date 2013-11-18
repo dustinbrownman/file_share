@@ -1,29 +1,40 @@
 <%= form_for @upload do |f| %>
 	<%= render 'errors' %>
-	<%= f.fields_for :sender do |ff| %>
-		<div>
-			<%= ff.label :name, 'Your name' %>
-			<%= ff.text_field :name %>
-		</div>
-		<div>
-			<%= ff.label :email, 'Your email address' %>
-			<%= ff.text_field :email %>
-		</div>
-	<% end %>
+	<fieldset>
+		<legend>Your Information</legend>
+		<%= f.fields_for :sender do |ff| %>
+			<div>
+				<%= ff.label :name %>
+				<%= ff.text_field :name %>
+			</div>
+			<div>
+				<%= ff.label :email %>
+				<%= ff.text_field :email %>
+			</div>
+		<% end %>
+	</fieldset>
 
-	<%= f.fields_for :recipients do |ff| %>
-		<div>
-			<%= ff.label :email, "Recipient's email address" %>
+	<fieldset>
+		<legend>Recipients</legend>
+		<%= f.nested_fields_for :recipients, wrapper_tag: :div do |ff| %>
+			<%= ff.label :email %>
 			<%= ff.text_field :email %>
-		</div>
-	<% end %>
+			<%= ff.remove_nested_fields_link 'Remove' %>
+		<% end %>
 
-	<%= f.fields_for :documents do |ff| %>
-		<div>
+		<%= f.add_nested_fields_link :recipients, 'Add recipient' %>
+	</fieldset>
+
+	<fieldset>
+		<legend>Documents to upload</legend>
+		<%= f.nested_fields_for :documents, wrapper_tag: :div do |ff| %>
 			<%= ff.label :attachment %>
 			<%= ff.file_field :attachment %>
-		</div>
-	<% end %>
+			<%= ff.remove_nested_fields_link 'Remove' %>
+		<% end %>
+
+		<%= f.add_nested_fields_link :documents, 'Add document' %>
+	</fieldset>
 
 	<%= f.submit 'Upload' %>
 <% end %>

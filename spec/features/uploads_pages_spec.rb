@@ -16,36 +16,46 @@ describe 'Uploads Pages' do
 		before { visit new_upload_path }
 
 		it 'with valid information' do
-			fill_in "Your name", with: 'Me'
-			fill_in "Your email address", with: 'email@this.com'
-			fill_in "Recipient's email address", with: 'someone@else.com'
-			attach_file 'Attachment', 'spec/test_doc.txt'
+			fill_in "upload[sender_attributes][name]", with: 'Me'
+			fill_in "upload[sender_attributes][email]", with: 'email@this.com'
+			fill_in "upload[recipients_attributes][0][email]", with: 'someone@else.com'
+			attach_file 'upload[documents_attributes][0][attachment]', 'spec/test_doc.txt'
 			click_button 'Upload'
 			page.should have_content 'successfully'
 		end
 
 		it 'missing sender information' do
-			fill_in "Your email address", with: 'email@this.com'
-			fill_in "Recipient's email address", with: 'someone@else.com'
+			fill_in "upload[sender_attributes][email]", with: 'email@this.com'
+			fill_in "upload[recipients_attributes][0][email]", with: 'someone@else.com'
 			attach_file 'Attachment', 'spec/test_doc.txt'
 			click_button 'Upload'
 			page.should have_content 'blank'
 		end
 
 		it 'missing recipient information' do
-			fill_in "Your name", with: 'Me'
-			fill_in "Recipient's email address", with: 'someone@else.com'
+			fill_in "upload[sender_attributes][name]", with: 'Me'
+			fill_in "upload[recipients_attributes][0][email]", with: 'someone@else.com'
 			attach_file 'Attachment', 'spec/test_doc.txt'
 			click_button 'Upload'
 			page.should have_content 'blank'
 		end
 
 		it 'missing document information' do
-			fill_in "Your name", with: 'Me'
-			fill_in "Your email address", with: 'email@this.com'
-			fill_in "Recipient's email address", with: 'someone@else.com'
+			fill_in "upload[sender_attributes][name]", with: 'Me'
+			fill_in "upload[sender_attributes][email]", with: 'email@this.com'
+			fill_in "upload[recipients_attributes][0][email]", with: 'someone@else.com'
 			click_button 'Upload'
 			page.should have_content 'must have an attached file'
+		end
+
+		it 'should have a link to add recipients', js: true do
+			click_link 'Add recipient'
+			page.all('.nested_upload_recipients').length.should eq 2
+		end
+
+		it 'should have a link to add documents', js: true do
+			click_link 'Add document'
+			page.all('.nested_upload_documents').length.should eq 2
 		end
 	end
 

@@ -6,6 +6,8 @@ require 'rspec/autorun'
 require 'capybara/rspec'
 require 'factory_girl_rails'
 require 'paperclip/matchers'
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
 
 include ActionDispatch::TestProcess
 

@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder'
 gem 'paperclip'
+gem 'nested_form_fields'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -28,4 +29,5 @@ group :test do
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'launchy'
+  gem 'poltergeist'
 end
